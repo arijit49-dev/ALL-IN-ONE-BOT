@@ -9,9 +9,9 @@ module.exports = (client) => {
     if (config.excessCommands.lavalink) {
         const nodes = [
             {
-                host: config.lavalink.lavalink.host,
-                password: config.lavalink.lavalink.password,
-                port: config.lavalink.lavalink.port,
+                host: process.env.LAVALINK_HOST || config.lavalink.lavalink.host,
+                password: process.env.LAVALINK_PASSWORD || config.lavalink.lavalink.password,
+                port: Number(process.env.LAVALINK_PORT) || config.lavalink.lavalink.port,
                 secure: config.lavalink.lavalink.secure
             }
         ];

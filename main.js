@@ -492,6 +492,9 @@ app.listen(port, () => {
     console.log(`🔗 Listening to GlaceYT : http://localhost:${port}`);
 });
 
-client.login(process.env.TOKEN || config.token);
+client.login(process.env.TOKEN || config.token).catch((error) => {
+    console.warn(`${colors.yellow}[ LOGIN ]${colors.reset} Bot not connected: ${error.message}`);
+    console.warn(`${colors.yellow}[ LOGIN ]${colors.reset} Enable Privileged Gateway Intents (Presence, Server Members, Message Content) in the Discord Developer Portal, then restart this service. The web status page stays online meanwhile.`);
+});
 
 module.exports = client;
