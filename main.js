@@ -492,6 +492,9 @@ app.listen(port, () => {
     console.log(`🔗 Listening to GlaceYT : http://localhost:${port}`);
 });
 
-client.login(process.env.TOKEN || config.token);
+client.login(process.env.TOKEN || config.token).catch((error) => {
+    console.error(`${colors.red}[ LOGIN ]${colors.reset} Discord login failed: ${error.message}`);
+    console.error(`${colors.yellow}[ LOGIN ]${colors.reset} The web status page stays online, but the bot is not connected. Set a valid TOKEN to connect.`);
+});
 
 module.exports = client;
