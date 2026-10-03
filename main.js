@@ -493,8 +493,8 @@ app.listen(port, () => {
 });
 
 client.login(process.env.TOKEN || config.token).catch((error) => {
-    console.error(`${colors.red}[ LOGIN ]${colors.reset} Discord login failed: ${error.message}`);
-    console.error(`${colors.yellow}[ LOGIN ]${colors.reset} The web status page stays online, but the bot is not connected. Set a valid TOKEN to connect.`);
+    console.warn(`${colors.yellow}[ LOGIN ]${colors.reset} Bot not connected: ${error.message}`);
+    console.warn(`${colors.yellow}[ LOGIN ]${colors.reset} Enable Privileged Gateway Intents (Presence, Server Members, Message Content) in the Discord Developer Portal, then restart this service. The web status page stays online meanwhile.`);
 });
 
 module.exports = client;
