@@ -14,12 +14,26 @@ services:
       retries: 5
       start_period: 10s
 
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4
+    restart: on-failure
+    volumes:
+      - ./lavalink/application.yml:/opt/Lavalink/application.yml
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -H 'Authorization: glaceyt' http://localhost:2333/version || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+
   app:
     image: node:22
     working_dir: /app
     restart: on-failure
     depends_on:
       mongodb:
+        condition: service_healthy
+      lavalink:
         condition: service_healthy
     volumes:
       - ./:/app
@@ -29,6 +43,9 @@ services:
     environment:
       - NODE_ENV=production
       - MONGODB_URI=mongodb://botuser:botpass123@mongodb:27017/discord-bot?authSource=admin
+      - LAVALINK_HOST=lavalink
+      - LAVALINK_PORT=2333
+      - LAVALINK_PASSWORD=glaceyt
       - BASE44_PUBLIC_HOST_SUFFIX=${BASE44_PUBLIC_HOST_SUFFIX}
     env_file:
       - /run/base44/app.env
