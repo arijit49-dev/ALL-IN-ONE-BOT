@@ -492,6 +492,9 @@ app.listen(port, () => {
     console.log(`🔗 Listening to GlaceYT : http://localhost:${port}`);
 });
 
-client.login(process.env.TOKEN || config.token);
+client.login(process.env.TOKEN || config.token).catch(err => {
+    console.error(`${colors.red}[ ERROR ]${colors.reset} ${colors.red}Failed to login to Discord: ${err.message}${colors.reset}`);
+    console.error(`${colors.yellow}[ WARNING ]${colors.reset} ${colors.red}Bot will continue running without Discord connection. Web server is still active on port ${port}.${colors.reset}`);
+});
 
 module.exports = client;
